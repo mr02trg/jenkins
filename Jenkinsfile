@@ -4,6 +4,7 @@ pipeline {
         stage ('--- Info ---') {
             agent any 
             steps {
+                echo 'FETCHING JENKINSFILE FROM ${GIT_URL} : ${GIT_BRANCH}'
                 echo 'BUILD_VERSION: ${BUILD_NUMBER}'
             }
         }
@@ -27,6 +28,17 @@ pipeline {
                 echo 'Build docker image'
                 sh 'docker build -t test ./proj1/'
                 sh 'docker tag test:latest 626379456089.dkr.ecr.ap-southeast-2.amazonaws.com/test:${BUILD_NUMBER}'
+            }
+        }
+        stage('--- Push to ECR ---') {
+            agent any
+            steps {
+                script {
+                    docker.withRegistry('https://626379456089.dkr.ecr.ap-southeast-2.amazonaws.com', 'ecr:ap-southeast-2:test-ecr-credentials')
+                    {
+                        docker.image('626379456089.dkr.ecr.ap-southeast-2.amazonaws.com/test:${BUILD_NUMBER}').push()
+                    }                
+                }
             }
         }
     }
