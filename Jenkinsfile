@@ -1,10 +1,21 @@
 pipeline {
-    agent any
+    agent none
     stages {
-        stage('Build Docker Image') {
+        stage('Build Node Application') {
+            agent {
+                docker {
+                    image 'node:latest'
+                }
+            }
             steps {
-                echo 'Building docker image ...'
+                echo 'NPM Build Application ...'
 				sh 'npm install --prefix ./proj1 && npm run build --prod --prefix ./proj1'
+            }
+        }
+        stage('Build Docker Image') {
+            agent any
+            steps {
+                echo 'Build docker image'
                 sh 'docker build -t jproj1 ./proj1/'
             }
         }
