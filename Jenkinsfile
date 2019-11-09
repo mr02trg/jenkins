@@ -7,6 +7,9 @@ pipeline {
                     image 'node:latest'
                 }
             }
+            environment {
+                HOME = '.'
+            }
             steps {
                 echo 'NPM Build Application ...'
 				sh 'npm install --prefix ./proj1 && npm run build --prod --prefix ./proj1'
