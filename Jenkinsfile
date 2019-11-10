@@ -1,14 +1,22 @@
 pipeline {
     agent none
     stages {
-        stage ('--- Info ---') {
+        stage ('Info') {
             agent any 
             steps {
                 echo 'FETCHING JENKINSFILE FROM ${GIT_URL} : ${GIT_BRANCH}'
                 echo 'BUILD_VERSION: ${BUILD_NUMBER}'
             }
         }
-        stage('--- Build Node Application ---') {
+		stage ('Hello World') {
+			agent any 
+			steps {
+				sh 'chmod +x hello-world.sh'
+				sh './hello-world.sh' 
+			}
+		}
+/*
+        stage('Build Node Application') {
             agent {
                 docker {
                     image 'node:latest'
@@ -22,7 +30,7 @@ pipeline {
 				sh "npm install --prefix ./proj1 && npm run build --prod --prefix ./proj1"
             }
         }
-        stage('--- Build Docker Image ---') {
+        stage('Build Docker Image') {
             agent any
             steps {
                 echo 'Build docker image'
@@ -30,7 +38,7 @@ pipeline {
                 sh "docker tag test:latest 626379456089.dkr.ecr.ap-southeast-2.amazonaws.com/test:${BUILD_NUMBER}"
             }
         }
-        stage('--- Push to ECR ---') {
+        stage('Push to ECR') {
             agent any
             steps {
                 script {
@@ -41,12 +49,13 @@ pipeline {
                 }
             }
         }
-        stage('--- Deploy to ECS ---') {
+        stage('Deploy to ECS') {
             agent any
             steps {
              	sh 'chmod +x ecs-deploy.sh'
 		sh './ecs-deploy.sh'
             }
         }
+*/
     }
 }
