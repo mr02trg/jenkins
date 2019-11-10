@@ -50,11 +50,11 @@ pipeline {
                 CLUSTER_NAME= "test-cluster"
             }
             steps {
-                sh "OLD_TASK_DEF=$(aws ecs describe-task-definition --task-definition ${TASK_FAMILY} --output json)"
-                sh "NEW_TASK_DEF=$(echo $OLD_TASK_DEF | jq --arg NDI ${NEW_DOCKER_IMAGE} \'.taskDefinition.containerDefinitions[0].image=$NDI\')"
+                sh "OLD_TASK_DEF=$(aws ecs describe-task-definition --task-definition ${env.TASK_FAMILY} --output json)"
+                sh "NEW_TASK_DEF=$(echo $OLD_TASK_DEF | jq --arg NDI ${env.NEW_DOCKER_IMAGE} \'.taskDefinition.containerDefinitions[0].image=$NDI\')"
                 sh "FINAL_TASK=$(echo $NEW_TASK_DEF | jq '.taskDefinition|{family: .family, volumes: .volumes, containerDefinitions: .containerDefinitions}')"
-                sh "aws ecs register-task-definition --family ${TASK_FAMILY} --cli-input-json \"$(echo $FINAL_TASK)\""
-                sh "aws ecs update-service --service ${SERVICE_NAME} --task-definition ${TASK_FAMILY} --cluster ${CLUSTER_NAME}"
+                sh "aws ecs register-task-definition --family ${env.TASK_FAMILY} --cli-input-json \"$(echo $FINAL_TASK)\""
+                sh "aws ecs update-service --service ${env.SERVICE_NAME} --task-definition ${env.TASK_FAMILY} --cluster ${env.CLUSTER_NAME}"
             }
         }
     }
