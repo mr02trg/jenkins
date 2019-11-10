@@ -62,6 +62,7 @@ pipeline {
     	stage('--- TEST ---') {
 			agent any 
 			steps {
+				sh 'chmod +x hello-world.sh'
 				sh './hello-world.sh'
 			}
     	}
