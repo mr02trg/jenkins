@@ -62,7 +62,7 @@ pipeline {
     	stage('--- TEST ---') {
 			agent any 
 			steps {
-				echo '$PWD'
+				sh './hello-world.sh'
 			}
     	}
     }
