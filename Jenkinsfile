@@ -8,6 +8,7 @@ pipeline {
                 echo 'BUILD_VERSION: ${BUILD_NUMBER}'
             }
         }
+/*
         stage('--- Build Node Application ---') {
             agent {
                 docker {
@@ -57,5 +58,12 @@ pipeline {
                 sh "aws ecs update-service --service ${env.SERVICE_NAME} --task-definition ${env.TASK_FAMILY} --cluster ${env.CLUSTER_NAME}"
             }
         }
+*/
+    	stage('--- TEST ---') {
+			agent any 
+			steps {
+				echo '$PWD'
+			}
+    	}
     }
 }
