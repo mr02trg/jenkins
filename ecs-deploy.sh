@@ -1,7 +1,7 @@
 #!/bin/bash
 TASK_FAMILY='test-definition'
 SERVICE_NAME='test-service'
-NEW_DOCKER_IMAGE='626379456089.dkr.ecr.ap-southeast-2.amazonaws.com/test:${BUILD_NUMBER}'
+NEW_DOCKER_IMAGE="626379456089.dkr.ecr.ap-southeast-2.amazonaws.com/test:${BUILD_NUMBER}"
 CLUSTER_NAME='test-cluster'
 OLD_TASK_DEF=$(aws ecs describe-task-definition --task-definition $TASK_FAMILY --output json)
 NEW_TASK_DEF=$(echo $OLD_TASK_DEF | jq --arg NDI $NEW_DOCKER_IMAGE '.taskDefinition.containerDefinitions[0].image=$NDI')
