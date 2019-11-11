@@ -44,6 +44,8 @@ pipeline {
         stage('Deploy to ECS') {
             agent any
             steps {
+                input 'Does everything look OK?'
+                milestone(1)
              	sh 'chmod +x ecs-deploy.sh'
 		        sh './ecs-deploy.sh'
             }
