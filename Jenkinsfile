@@ -45,7 +45,7 @@ pipeline {
             agent any
             steps {
              	sh 'chmod +x ecs-deploy.sh'
-		sh './ecs-deploy.sh'
+		        sh './ecs-deploy.sh'
             }
         }
     }
