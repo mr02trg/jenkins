@@ -8,14 +8,6 @@ pipeline {
                 echo 'BUILD_VERSION: ${BUILD_NUMBER}'
             }
         }
-		stage ('Hello World') {
-			agent any 
-			steps {
-				sh 'chmod +x hello-world.sh'
-				sh './hello-world.sh' 
-			}
-		}
-/*
         stage('Build Node Application') {
             agent {
                 docker {
@@ -56,6 +48,5 @@ pipeline {
 		sh './ecs-deploy.sh'
             }
         }
-*/
     }
 }
