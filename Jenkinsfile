@@ -6,6 +6,7 @@ pipeline {
             steps {
                 echo 'FETCHING JENKINSFILE FROM ${GIT_URL} : ${GIT_BRANCH}'
                 echo 'BUILD_VERSION: ${BUILD_NUMBER}'
+	    	slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
             }
         }
         stage('Build Node Application') {
